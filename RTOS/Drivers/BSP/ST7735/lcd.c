@@ -79,11 +79,10 @@ void LCD_Test(void)
 
 
 	ST7735_LCD_Driver.FillRect(&st7735_pObj, 0, 0, ST7735Ctx.Width,ST7735Ctx.Height, BLUE);
-	while(1)
-	{
-    LCD_Light(10,1000);
-	LCD_Light(500,1000);
-	}
+
+    LCD_Light(10,3000);
+	LCD_Light(500,3000);
+
 	
 
 }
