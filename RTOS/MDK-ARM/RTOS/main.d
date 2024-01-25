@@ -32,6 +32,8 @@ rtos\main.o: ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_i2c.h
 rtos\main.o: ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_i2c_ex.h
 rtos\main.o: ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_pwr.h
 rtos\main.o: ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_pwr_ex.h
+rtos\main.o: ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_spi.h
+rtos\main.o: ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_spi_ex.h
 rtos\main.o: ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_tim.h
 rtos\main.o: ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_tim_ex.h
 rtos\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h
@@ -48,4 +50,10 @@ rtos\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h
 rtos\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h
 rtos\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h
 rtos\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h
+rtos\main.o: ../Core/Inc/spi.h
+rtos\main.o: ../Core/Inc/tim.h
 rtos\main.o: ../Core/Inc/gpio.h
+rtos\main.o: ../Drivers/BSP/ST7735/st7735.h
+rtos\main.o: ../Drivers/BSP/ST7735/st7735_reg.h
+rtos\main.o: ../Drivers/BSP/ST7735/lcd.h
+rtos\main.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
