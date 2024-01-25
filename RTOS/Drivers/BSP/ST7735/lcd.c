@@ -99,9 +99,9 @@ uint32_t LCD_GetBrightness(void)
 }
 
 
-// ��Ļ�𽥱������߱䰵
-// Brightness_Dis: Ŀ��ֵ
-// time: �ﵽĿ��ֵ��ʱ��,��λ: ms
+// 屏幕逐渐变亮或者变暗
+// Brightness_Dis: 目标值
+// time: 达到目标值的时间,单位: ms
 void LCD_Light(uint32_t Brightness_Dis,uint32_t time)
 {
 	uint32_t Brightness_Now;
@@ -142,13 +142,13 @@ void LCD_Light(uint32_t Brightness_Dis,uint32_t time)
 	}
 }
 	
-uint16_t POINT_COLOR=0xFFFF;	//������ɫ
-uint16_t BACK_COLOR=BLACK;  //����ɫ 
-//��ָ��λ����ʾһ���ַ�
-//x,y:��ʼ����
-//num:Ҫ��ʾ���ַ�:" "--->"~"
-//size:�����С 12/16
-//mode:���ӷ�ʽ(1)���Ƿǵ��ӷ�ʽ(0)  
+uint16_t POINT_COLOR=0xFFFF;	//画笔颜色
+uint16_t BACK_COLOR=BLACK;  //背景色 
+//在指定位置显示一个字符
+//x,y:起始坐标
+//num:要显示的字符:" "--->"~"
+//size:字体大小 12/16
+//mode:叠加方式(1)还是非叠加方式(0)  
 
 void LCD_ShowChar(uint16_t x,uint16_t y,uint8_t num,uint8_t size,uint8_t mode)
 {  							  
@@ -164,16 +164,16 @@ void LCD_ShowChar(uint16_t x,uint16_t y,uint8_t num,uint8_t size,uint8_t mode)
   ST7735_GetXSize(&st7735_pObj,&w);
 	ST7735_GetYSize(&st7735_pObj,&h);
 	
-	//���ô���		   
-	num=num-' ';//�õ�ƫ�ƺ��ֵ
+	//设置窗口		   
+	num=num-' ';//得到偏移后的值
 	count = 0;
 	
-	if(!mode) //�ǵ��ӷ�ʽ
+	if(!mode) //非叠加方式
 	{
 		for(t=0;t<size;t++)
 		{   
-			if(size==12)temp=asc2_1206[num][t];  //����1206����
-			else temp=asc2_1608[num][t];		 //����1608����
+			if(size==12)temp=asc2_1206[num][t];  //调用1206字体
+			else temp=asc2_1608[num][t];		 //调用1608字体
 			
 			for(t1=0;t1<8;t1++)
 			{			    
@@ -188,23 +188,23 @@ void LCD_ShowChar(uint16_t x,uint16_t y,uint8_t num,uint8_t size,uint8_t mode)
 				
 				temp<<=1;
 				y++;
-				if(y>=h){POINT_COLOR=colortemp;return;}//��������
+				if(y>=h){POINT_COLOR=colortemp;return;}//超区域了
 				if((y-y0)==size)
 				{
 					y=y0;
 					x++;
-					if(x>=w){POINT_COLOR=colortemp;return;}//��������
+					if(x>=w){POINT_COLOR=colortemp;return;}//超区域了
 					break;
 				}
 			}
 		}
 	}
-	else//���ӷ�ʽ
+	else//叠加方式
 	{
 		for(t=0;t<size;t++)
 		{   
-			if(size==12)temp=asc2_1206[num][t];  //����1206����
-			else temp=asc2_1608[num][t];		 //����1608���� 	                          
+			if(size==12)temp=asc2_1206[num][t];  //调用1206字体
+			else temp=asc2_1608[num][t];		 //调用1608字体 	                          
 			for(t1=0;t1<8;t1++)
 			{			    
 				if(temp&0x80)
@@ -214,12 +214,12 @@ void LCD_ShowChar(uint16_t x,uint16_t y,uint8_t num,uint8_t size,uint8_t mode)
 				
 				temp<<=1;
 				y++;
-				if(y>=h){POINT_COLOR=colortemp;return;}//��������
+				if(y>=h){POINT_COLOR=colortemp;return;}//超区域了
 				if((y-y0)==size)
 				{
 					y=y0;
 					x++;
-					if(x>=w){POINT_COLOR=colortemp;return;}//��������
+					if(x>=w){POINT_COLOR=colortemp;return;}//超区域了
 					break;
 				}
 			}  	 
@@ -229,20 +229,20 @@ void LCD_ShowChar(uint16_t x,uint16_t y,uint8_t num,uint8_t size,uint8_t mode)
 	POINT_COLOR=colortemp;	    	   	 	  
 }   
 
-//��ʾ�ַ���
-//x,y:�������
-//width,height:�����С  
-//size:�����С
-//*p:�ַ�����ʼ��ַ
+//显示字符串
+//x,y:起点坐标
+//width,height:区域大小  
+//size:字体大小
+//*p:字符串起始地址
 void LCD_ShowString(uint16_t x,uint16_t y,uint16_t width,uint16_t height,uint8_t size,uint8_t *p)
 {         
 	uint8_t x0=x;
 	width+=x;
 	height+=y;
-    while((*p<='~')&&(*p>=' '))//�ж��ǲ��ǷǷ��ַ�!
+    while((*p<='~')&&(*p>=' '))//判断是不是非法字符!
     {       
         if(x>=width){x=x0;y+=size;}
-        if(y>=height)break;//�˳�
+        if(y>=height)break;//退出
         LCD_ShowChar(x,y,*p,size,0);
         x+=size/2;
         p++;
